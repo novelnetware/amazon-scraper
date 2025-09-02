@@ -1,0 +1,47 @@
+# تنظیمات کلی اسکرپر
+scraper:
+  # استفاده از حالت headless (بدون نمایش گرافیکی مرورگر). برای دیباگ کردن می‌توانید false کنید.
+  headless: true
+  workers: "auto"
+
+# تنظیمات مخصوص سایت آمازون
+amazon:
+  base_url: "https://www.amazon.ae"
+  category_selector: 'div[data-testid*="Department"] ul li a' 
+  # الگوی ساخت URL برای دسته‌بندی‌های با تخفیف
+  # ما از placeholder هایی مثل {node}, {minPrice} و ... استفاده می‌کنیم
+  # این رشته JSON یکبار URL-encode شده است.
+  discounts_url_format: "/b?node={node}&discounts-widget=%7B%22state%22%3A%7B%22rangeRefinementFilters%22%3A%7B%22price%22%3A%7B%22min%22%3A{minPrice}%2C%22max%22%3A{maxPrice}%7D%2C%22percentOff%22%3A%7B%22min%22%3A{minDiscount}%2C%22max%22%3A{maxDiscount}%7D%7D%7D%2C%22version%22%3A1%7D"
+
+  # یک دسته نمونه برای تست
+  categories:
+    - name: "Fashion"
+      node: "11497631031"
+  
+  # فیلترهای نمونه
+  filters:
+    min_price: 300
+    max_price: 3600
+    min_discount: 40
+    max_discount: 70
+
+
+translator:
+  # The name of the primary provider to use from the list below.
+  primary_provider: "deepseek"
+  
+  # A list of provider names to try, in order, if the primary provider fails.
+  fallback_providers: ["openai"]
+
+  providers:
+    - name: "deepseek"
+      api_url: "https://api.deepseek.com/chat/completions"
+      api_key: "sk-e5d3f288bcae403886e61cb2a5b76cb0"
+      model: "deepseek-chat"
+    - name: "openai"
+      api_url: "https://api.openai.com/v1/chat/completions"
+      api_key: "sk-your-openai-api-key"
+      model: "gpt-4o"
+
+server:
+  api_key: "your-super-secret-and-long-api-key"
